@@ -8,8 +8,8 @@ const products = [
     brand: "Ikea",
     category: "Home Decor",
     price: 3900.00,
-    countInStock: 10,
-    rating: 4.2,
+    countInStock: 0,
+    rating: 4.6,
     numReviews: 12,
   },
   {
