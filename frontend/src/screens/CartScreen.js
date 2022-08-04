@@ -11,7 +11,7 @@ import {
   Card,
 } from "react-bootstrap";
 import Message from "../components/Message";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 
 const CartScreen = () => {
   const { id } = useParams();
@@ -30,11 +30,11 @@ const CartScreen = () => {
   }, [dispatch, id, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log("removed");
+    dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
-    navigate("/login?redirect=shipping")
+    navigate("/login?redirect=shipping");
   };
 
   return (
@@ -43,7 +43,7 @@ const CartScreen = () => {
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message>
-            Your cart is empty. <Link to="/">Go Back</Link>{" "}
+            Your cart is empty. <Link to="/">Go Back</Link>
           </Message>
         ) : (
           <ListGroup variant="flush">
@@ -95,8 +95,12 @@ const CartScreen = () => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                items
+                Subtotal (
+                {cartItems.reduce(
+                  (acc, item) => Number(acc) + Number(item.qty),
+                  0
+                )}
+                ) items
               </h2>
               $
               {cartItems
