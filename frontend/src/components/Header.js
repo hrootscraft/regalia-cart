@@ -3,6 +3,7 @@ import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { logout } from "../actions/userActions";
+import { USER_DETAILS_RESET } from "../constants/userConstants";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
+    dispatch({ type: USER_DETAILS_RESET });
   };
 
   return (
