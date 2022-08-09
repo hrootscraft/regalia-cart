@@ -22,7 +22,6 @@ function App() {
       <main className="py-3">
         <Container>
           <Routes>
-            <Route path="/admin/userList" element={<UserListScreen />} />
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/placeorder" element={<PlaceOrderScreen />} />
             <Route path="/payment" element={<PaymentScreen />} />
@@ -36,6 +35,7 @@ function App() {
               <Route index element={<CartScreen />} />
               <Route path=":id" element={<CartScreen />} />
             </Route>
+            <Route path="/admin/userList" element={<UserListScreen />} />
           </Routes>
         </Container>
       </main>
