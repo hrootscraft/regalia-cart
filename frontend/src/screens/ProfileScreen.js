@@ -7,6 +7,7 @@ import Loader from "../components/Loader";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { listMyOrders } from "../actions/orderActions";
 import { LinkContainer } from "react-router-bootstrap";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -30,11 +31,13 @@ const ProfileScreen = () => {
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!(userInfo && userInfo._id)) {
       navigate("/login");
     } else {
-      if (!user || !user.name) {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
         dispatch(listMyOrders());
       } else {
@@ -42,7 +45,7 @@ const ProfileScreen = () => {
         setEmail(user.email);
       }
     }
-  }, [userInfo, dispatch, user]);
+  }, [dispatch, navigate, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
