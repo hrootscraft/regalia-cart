@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -39,11 +44,13 @@ function App() {
               <Route path=":id" element={<CartScreen />} />
             </Route>
             <Route path="/admin">
-              <Route path="user/:id/edit" element={<UserEditScreen />} />
+              <Route index element={<Navigate replace to="/profile" />} />
               <Route path="product/:id/edit" element={<ProductEditScreen />} />
+              <Route path="user/:id/edit" element={<UserEditScreen />} />
               <Route path="userlist" element={<UserListScreen />} />
               <Route path="productlist" element={<ProductListScreen />} />
             </Route>
+            <Route path="*" element={<p>Not found.</p>} />
           </Routes>
         </Container>
       </main>
