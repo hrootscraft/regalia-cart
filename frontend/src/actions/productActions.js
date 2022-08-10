@@ -8,6 +8,9 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
 } from "../constants/productConstants";
 import axios from "axios";
 import { logout } from "./userActions";
@@ -94,3 +97,44 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   }
 };
 // now head to ProductListScreen, 'cuz that's where it is called
+
+export const createProduct = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PRODUCT_CREATE_REQUEST,
+    });
+
+    // from userLogin, get userInfo
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    // from userInfo get the token to configure the route
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // we're not sending any data here, so put an empty arg as 2nd arg
+    const { data } = await axios.post(`/api/products`, {}, config);
+    // data will contain the newly created product
+
+    dispatch({
+      type: PRODUCT_CREATE_SUCCESS,
+      payload: data,
+    });
+    // if any of the above fails, throw an error that is caught below
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: PRODUCT_CREATE_FAIL,
+      payload: message,
+    });
+  }
+};
