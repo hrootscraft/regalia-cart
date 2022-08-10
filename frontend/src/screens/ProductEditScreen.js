@@ -17,7 +17,6 @@ const ProductEditScreen = () => {
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-  console.log("loading", loading);
 
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
