@@ -4,7 +4,7 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { listProducts } from "../actions/productActions";
+import { listProducts, deleteProduct } from "../actions/productActions";
 import { useNavigate } from "react-router-dom";
 
 const ProductListScreen = () => {
@@ -14,27 +14,39 @@ const ProductListScreen = () => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
+  //=>2.
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
   // to check if the user is logged in
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  //=>3. add deleteSuccess status to the dependencies array
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listProducts());
     } else {
       navigate("/login");
     }
-  }, [dispatch, navigate, userInfo]);
+  }, [dispatch, navigate, userInfo, successDelete]);
+  //now, add this productDelete reducer to store
 
   const createProductHandler = (product) => {
-      // CREATE PRODUCT
-  }
+    // CREATE PRODUCT
+  };
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure you want to delete that user?")) {
-      // DELETE PRODUCTS
+      //the id from the argument above that comes from the click below is passed on for deletion
+      dispatch(deleteProduct(id));
     }
   };
+  //now we wanna get the success state from the  product delete state =>1.
 
   return (
     <>
@@ -48,6 +60,8 @@ const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

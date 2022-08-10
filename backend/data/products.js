@@ -74,3 +74,4 @@ const products = [
 ];
 
 export default products;
+//if, we do an npm run data:import, it will bring back the initial seed data into the application but will clear the orders if there are any

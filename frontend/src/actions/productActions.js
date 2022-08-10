@@ -5,8 +5,12 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAIL,
 } from "../constants/productConstants";
 import axios from "axios";
+import { logout } from "./userActions";
 
 export const listProducts = () => async (dispatch) => {
   try {
@@ -49,3 +53,44 @@ export const listProductDetails = (id) => async (dispatch) => {
     });
   }
 };
+
+// the id here comes from the component in which it is called
+export const deleteProduct = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PRODUCT_DELETE_REQUEST,
+    });
+
+    // from userLogin, get userInfo
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    // from userInfo get the token to configure the route
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/products/${id}`, config);
+
+    dispatch({
+      type: PRODUCT_DELETE_SUCCESS,
+    });
+    // if any of the above fails, throw an error that is caught below
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: PRODUCT_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};
+// now head to ProductListScreen, 'cuz that's where it is called
