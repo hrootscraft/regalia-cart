@@ -11,6 +11,8 @@ import orderRoutes from "./routes/orderRoutes.js";
 dotenv.config();
 
 connectDB();
+// foll. line must be placed before all routes
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("API is running...");
@@ -18,7 +20,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRoutes);
 
-app.use(express.json());
 app.use("/api/users", userRoutes);
 
 app.use("/api/orders", orderRoutes);
