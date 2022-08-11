@@ -4,15 +4,6 @@
 > More features to be worked, expanded & improvised on in future.
 
 ![Image](cover-images/ss1.png)
-![Image](cover-images/ss2.png)
-![Image](cover-images/ss3.png)
-![Image](cover-images/ss4.png)
-![Image](cover-images/ss5.png)
-![Image](cover-images/ss6.png)
-![Image](cover-images/ss7.png)
-![Image](cover-images/ss8.png)
-![Image](cover-images/ss9.png)
-![Image](cover-images/ss10.png)
 
 ## Features
 
@@ -105,3 +96,12 @@ john@example.com (Customer)
 jane@example.com (Customer)
 123456
 ```
+![Image](cover-images/ss2.png)
+![Image](cover-images/ss3.png)
+![Image](cover-images/ss4.png)
+![Image](cover-images/ss5.png)
+![Image](cover-images/ss6.png)
+![Image](cover-images/ss7.png)
+![Image](cover-images/ss8.png)
+![Image](cover-images/ss9.png)
+![Image](cover-images/ss10.png)
