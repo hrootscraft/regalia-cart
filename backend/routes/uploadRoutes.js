@@ -14,30 +14,26 @@ const storage = multer.diskStorage({
     );
   },
 });
-// path.extname gets the file extionsion on the file and adds it to the filename
 
-const checkFileType = (file, cb) => {
+function checkFileType(file, cb) {
   const filetypes = /jpg|jpeg|png/;
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase()); //boolean
-  const mimetype = filetypes.test(file.mimetype); //boolean
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
 
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb("Images only!");
+    cb(new Error("Images only!"));
   }
-};
+}
 
-// customize to allow users to upload only images
 const upload = multer({
   storage,
-  fileFilter: (req, file, cb) => {
+  fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
 });
 
-// we can allow multiple image uploads but here we're going with "single"
-// route is configured with that middleware
 router.post("/", upload.single("image"), (req, res) => {
   res.send(`/${req.file.path}`);
 });
