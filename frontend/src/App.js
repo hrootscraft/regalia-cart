@@ -40,20 +40,32 @@ function App() {
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/" element={<HomeScreen />} />
             <Route path="/products/:id" element={<ProductScreen />} />
-            <Route path="/search/:keyword" element={<HomeScreen />} />
+
+            <Route path="/search/:keyword">
+              <Route index element={<HomeScreen />} />
+              <Route path="page/:pageNumber" element={<HomeScreen />} />
+            </Route>
+
+            <Route path="/page/:pageNumber" element={<HomeScreen />} />
+
             <Route path="/cart">
               <Route index element={<CartScreen />} />
               <Route path=":id" element={<CartScreen />} />
             </Route>
+
             <Route path="/admin">
               <Route index element={<Navigate replace to="/profile" />} />
               <Route path="product/:id/edit" element={<ProductEditScreen />} />
               <Route path="user/:id/edit" element={<UserEditScreen />} />
               <Route path="userlist" element={<UserListScreen />} />
               <Route path="orderlist" element={<OrderListScreen />} />
-              <Route path="productlist" element={<ProductListScreen />} />
+              <Route path="productlist">
+                <Route index element={<ProductListScreen />} />
+                <Route path=":pageNumber" element={<ProductListScreen />} />
+              </Route>
             </Route>
-            {/* <Route path="*" element={<p>Not found.</p>} /> */}
+
+            <Route path="*" element={<p>Not found.</p>} />
           </Routes>
         </Container>
       </main>
