@@ -40,6 +40,7 @@ function App() {
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/" element={<HomeScreen />} />
             <Route path="/products/:id" element={<ProductScreen />} />
+            <Route path="/search/:keyword" element={<HomeScreen />} />
             <Route path="/cart">
               <Route index element={<CartScreen />} />
               <Route path=":id" element={<CartScreen />} />
@@ -52,7 +53,7 @@ function App() {
               <Route path="orderlist" element={<OrderListScreen />} />
               <Route path="productlist" element={<ProductListScreen />} />
             </Route>
-            <Route path="*" element={<p>Not found.</p>} />
+            {/* <Route path="*" element={<p>Not found.</p>} /> */}
           </Routes>
         </Container>
       </main>
