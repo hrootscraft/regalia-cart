@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import path from "path";
+import morgan from "morgan";
 
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -15,6 +16,11 @@ dotenv.config();
 connectDB();
 // foll. line must be placed before all routes
 app.use(express.json());
+
+// logs when an endpt is hit
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 app.get("/", (req, res) => {
   res.send("API is running...");
